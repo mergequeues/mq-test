@@ -3,7 +3,22 @@ on:
   pull_request:
   merge_group:
 jobs:
-  test:
+  kodem-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "fake Kodem scan (SCA + SAST)"
+          sleep 60
+          echo ok
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "fake build"
+          sleep 60
+          echo ok
+  unit-tests:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,4 +29,12 @@ jobs:
             echo "FAIL: a.txt and b.txt cannot exist together"
             exit 1
           fi
+          echo ok
+  korvette:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "fake korvette e2e"
+          sleep 180
           echo ok
